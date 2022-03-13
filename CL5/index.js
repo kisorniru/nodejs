@@ -2,8 +2,11 @@ const _ = require('lodash');
 const path = require('path');
 const os = require('os');
 const fs = require('fs');
-const people = require('./modules/player');
-const matchOfficial = require('./modules/matchOfficial');
+
+// More info
+//  https://www.w3schools.com/nodejs/ref_modules.asp
+//  https://www.youtube.com/watch?v=IUBd76UQb34
+//  https://www.youtube.com/watch?v=qImH1bFubW4
 
 //  fs example
 //  file writing & reading in synchronize way
@@ -38,7 +41,3 @@ const myPath = 'C:/wamp64/www/html/LWS/nodeJs/index.js';
 console.log(path.basename(myPath));
 console.log(path.dirname(myPath));
 console.log(path.parse(myPath));
-
-//  lodash example
-console.log(_.last(people.people));
-console.log(_.findLastIndex(matchOfficial.people));
