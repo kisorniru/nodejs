@@ -6,7 +6,9 @@
  */
 // dependencies
 const url = require('url');
+const routes = require('routes');
 const { stringDecoder, StringDecoder } = require('string_decoder');
+const { notFoundHandler } = require('../handlers/routeHandlers/notFoundHandler');
 
 // modele scaffolding
 const handler = {};
@@ -22,8 +24,30 @@ handler.handleReqRes = (req, res) => {
     const queryStringObject = parseUrl.query;
     const headersObject = req.headers;
 
+    const requestProperties = {
+        parseUrl,
+        path,
+        trimedPath,
+        method,
+        queryStringObject,
+        headersObject,
+    };
+
     const decoder = new StringDecoder('utf-8');
     let realData = '';
+
+    const chosenHandler = routes[trimedPath] ? routes[trimedPath] : notFoundHandler;
+
+    chosenHandler(requestProperties, (statusCode, payload) => {
+        statusCode = typeof statusCode === 'number' ? statusCode : 500;
+        payload = typeof payload === 'object' ? payload : {};
+
+        const payloadString = JSON.stringify(payload);
+
+        // return the final response
+        res.writeHead(statusCode);
+        res.end(payloadString);
+    });
 
     req.on('data', (buffer) => {
         realData += decoder.write(buffer);

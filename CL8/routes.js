@@ -7,9 +7,14 @@
  */
 
 // Dependencies
+const { sampleHandler } = require('./handlers/routeHandlers/handlers');
+const { notFoundHandler } = require('./handlers/routeHandlers/notFoundHandler');
 
 // Module scaffolding
-const routes = {};
+const routes = {
+    sample: sampleHandler,
+    notFoundHandler,
+};
 
 // Configuration
 routes.config = {};
